@@ -1,5 +1,5 @@
 const express = require('express')
-
+const requireAuth = require('../middleware/require.js');
 const {
     postArticle,
      GetAllArticle,
@@ -10,14 +10,14 @@ const {
 
 const router = express.Router();
 
-router.post('/articles', postArticle)
+router.post('/articles',requireAuth, postArticle)
 
-router.get('/articles', GetAllArticle)
+router.get('/articles',requireAuth, GetAllArticle)
 
-router.get('/articles/:id', GetArticleById)
+router.get('/articles/:id',requireAuth, GetArticleById)
 
-router.put('/articles/:id',updateArticleById)
+router.put('/articles/:id',requireAuth,updateArticleById)
 
-router.delete('/articles/:id', deleteArticleById)
+router.delete('/articles/:id',requireAuth, deleteArticleById)
 
 module.exports = router;

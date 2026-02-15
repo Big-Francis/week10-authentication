@@ -5,6 +5,7 @@ const connectDB = require('./database/connectDB.js');
 const errorHandler = require('./middleware/errorHandler.js');
 const RequestLogger = require('./middleware/logger.js');
 const ArticleRoutes = require('./routes/article.route.js')
+const userRoutes = require('./routes/user.route')
 
 
 
@@ -21,6 +22,7 @@ app.use(cors('*'))
 app.use(RequestLogger)
 
 app.use('/api', ArticleRoutes)
+app.use('/api/users/', userRoutes)
 
 app.use(errorHandler);
 

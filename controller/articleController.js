@@ -17,9 +17,9 @@ const postArticle = async(req,res,next) => {
     try {
         const {title, content, author} = value;
         const newArticle = new ArticleModel({
-            title,
-            content,
-            author: author|| 'Guest'
+            title: req.body.title,
+            content: req.content,
+            author: req.user._id
         });
         await newArticle.save();
 
@@ -33,15 +33,16 @@ const postArticle = async(req,res,next) => {
 }
 
 const GetAllArticle = async(req,res,next) => {
-    const {limit = 10, page = 1} = req.query
+    // const {limit = 10, page = 1} = req.query
 
-    const skip = (page - 1)*limit;
+    // const skip = (page - 1)*limit;
 
     try {
-        const articles = await ArticleModel.find({})
-        .sort({createdAt: -1})
-        .limit(limit)
-        .skip(skip)
+        console.log(req.user)
+        const articles = await ArticleModel.find().populate('author','name _id email'); //.find({})
+        //.sort({createdAt: -1})
+        //.limit(limit)
+        //.skip(skip)
         
         return res.status(200).json({
             message: 'Article fetched successfully',
@@ -70,7 +71,6 @@ const GetArticleById = async(req,res,next) => {
         next(error)
     }
 }
-
 
 const updateArticleById = async(req,res,next) => {  
        const articleSchema = Joi.object({

@@ -11,9 +11,9 @@ const articleSchema = new mongoose.Schema({
         minLength: 20
     },
     author: {
-        type: String,
-        default: 'Guest',
-    },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true    },
 },
 {timestamps: true},
 );
